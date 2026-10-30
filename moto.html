@@ -1,0 +1,454 @@
+\<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Moto - Pièces & Véhicules</title>
+  <style>
+    /* --- STYLES GENERAUX --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #eef2f7;
+      color: #333;
+      padding-bottom: 60px;
+    }
+
+    /* --- BARRE DE NAVIGATION --- */
+    header {
+      background: #ffffff;
+      padding: 12px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      color: #1a237e;
+    }
+
+    .logo-icon {
+      width: 35px;
+      height: 35px;
+      background: #e6eef9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #555;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    nav a.active {
+      color: #ff5722;
+      border-bottom: 2px solid #ff5722;
+      padding-bottom: 4px;
+    }
+
+    .search-bar {
+      background: #f0f4f9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      width: 300px;
+    }
+
+    .search-bar input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      margin-left: 8px;
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: #f0f4f9;
+      border: none;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #ff5722;
+      color: white;
+      font-size: 10px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- BANNIERE HERO --- */
+    .hero {
+      background: #0d1b2a;
+      color: white;
+      padding: 40px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hero-text {
+      max-width: 500px;
+    }
+
+    .hero-text h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .hero-text h1 span {
+      color: #ff5722;
+    }
+
+    .hero-text p {
+      color: #a0aec0;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .btn-orange {
+      background: #ff5722;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero-graphic {
+      width: 300px;
+      height: 180px;
+      border: 1px dashed rgba(255,255,255,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4a5568;
+    }
+
+    /* --- SECTION PRODUITS --- */
+    .section-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #1a202c;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    /* Soft UI / Neumorphism Card */
+    .product-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: 8px 8px 16px #e0e5ec, -8px -8px 16px #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #e6fffa;
+      color: #319795;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 12px;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .product-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #2d3748;
+      margin-bottom: 12px;
+    }
+
+    .btn-add-cart {
+      background: #f7fafc;
+      border: 1px solid #edf2f7;
+      color: #ff5722;
+      padding: 8px;
+      border-radius: 10px;
+      width: 100%;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px #e0e5ec, -2px -2px 5px #ffffff;
+    }
+
+    /* --- SECTION MON PANIER & PAIEMENT --- */
+    .cart-section {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 40px;
+      box-shadow: 8px 8px 16px #e0e5ec, -8px -8px 16px #ffffff;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .cart-item-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cart-item-img {
+      width: 45px;
+      height: 45px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: none;
+      background: #e2e8f0;
+      cursor: pointer;
+    }
+
+    /* Modes de Paiement */
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .pay-card {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: bold;
+      border: 1px solid #edf2f7;
+    }
+
+    /* Bouton Flottant Support/WhatsApp */
+    .floating-whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRE DE NAVIGATION -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🏍️</div>
+      <span>MotoParts</span>
+    </div>
+    <nav>
+      <a href="#">Motos</a>
+      <a href="#">Scooters</a>
+      <a href="#">Pièces détachées</a>
+      <a href="#" class="active">Promotions</a>
+      <a href="#">Acheter</a>
+    </nav>
+    <div class="search-bar">
+      🔍 <input type="text" placeholder="Rechercher une pièce, moto...">
+    </div>
+    <div class="user-actions">
+      <div class="cart-btn">
+        🛒
+        <div class="cart-badge">2</div>
+      </div>
+      <div class="logo-icon">👤</div>
+    </div>
+  </header>
+
+  <!-- BANNIERE ACCUEIL (HERO) -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>La pièce exacte pour votre moto.<br><span>Vérifiée avant de partir.</span></h1>
+      <p>Vente, remplacement de pièces détachées. Envoi express dans toute la région.</p>
+      <button class="btn-orange">Trouver une pièce</button>
+    </div>
+    <div class="hero-graphic">
+      [ Schéma Technique Moto ]
+    </div>
+  </section>
+
+  <!-- SECTION CATALOGUE (PROMOTIONS) -->
+  <main class="section-container">
+    <h2 class="section-title">Promotions</h2>
+    <div class="product-grid">
+
+      <!-- Carte Produit 1 -->
+      <div class="product-card">
+        <span class="tag">En stock</span>
+        <img class="product-img" src="https://via.placeholder.com/240x140" alt="Produit">
+        <div class="product-title">Moteur moto 150cc</div>
+        <div class="product-price">120 000 XOF</div>
+        <button class="btn-add-cart">AJOUTER AU PANIER</button>
+      </div>
+
+      <!-- Carte Produit 2 -->
+      <div class="product-card">
+        <span class="tag">En stock</span>
+        <img class="product-img" src="https://via.placeholder.com/240x140" alt="Produit">
+        <div class="product-title">Scooter Bleu City</div>
+        <div class="product-price">450 000 XOF</div>
+        <button class="btn-add-cart">AJOUTER AU PANIER</button>
+      </div>
+
+      <!-- Carte Produit 3 -->
+      <div class="product-card">
+        <span class="tag">En stock</span>
+        <img class="product-img" src="https://via.placeholder.com/240x140" alt="Produit">
+        <div class="product-title">Kit chaîne & engrenages</div>
+        <div class="product-price">35 000 XOF</div>
+        <button class="btn-add-cart">AJOUTER AU PANIER</button>
+      </div>
+
+      <!-- Carte Produit 4 -->
+      <div class="product-card">
+        <span class="tag">En stock</span>
+        <img class="product-img" src="https://via.placeholder.com/240x140" alt="Produit">
+        <div class="product-title">Tuk Tuk / Tricycle</div>
+        <div class="product-price">850 000 XOF</div>
+        <button class="btn-add-cart">AJOUTER AU PANIER</button>
+      </div>
+
+    </div>
+
+    <!-- RECAPITULATIF DU PANIER & PAIEMENT -->
+    <div class="cart-section">
+      <h3 style="margin-bottom: 15px;">Mon panier</h3>
+      
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <img src="https://via.placeholder.com/45" class="cart-item-img" alt="item">
+          <div>
+            <div style="font-weight: bold; font-size: 13px;">Moteur 150cc complet</div>
+            <div style="color: #ff5722; font-size: 12px; font-weight: bold;">120 000 XOF</div>
+          </div>
+        </div>
+        <div class="qty-controls">
+          <button class="qty-btn">-</button>
+          <span>1</span>
+          <button class="qty-btn">+</button>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold;">
+        <span>Total de votre commande :</span>
+        <span style="color: #ff5722;">120 000 XOF</span>
+      </div>
+
+      <button class="btn-orange" style="width: 100%; margin-top: 15px;">VALIDER LA COMMANDE</button>
+
+      <!-- Paiement -->
+      <div style="margin-top: 20px;">
+        <span style="font-size: 12px; color: #718096;">Modes de paiement acceptés :</span>
+        <div class="payment-methods">
+          <div class="pay-card">Orange Money</div>
+          <div class="pay-card">MTN MoMo</div>
+          <div class="pay-card">Wave</div>
+          <div class="pay-card">Carte Bancaire</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- BOUTON FLOTTANT -->
+  <div class="floating-whatsapp">💬</div>
+
+</body>
+</html>

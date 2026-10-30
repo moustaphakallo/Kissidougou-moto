@@ -1,0 +1,18 @@
+{
+  "name": "motos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "JavaScript.js",
+  "scripts": {
+    "start": "node JavaScript.js",
+    "dev": "nodemon JavaScript.js",
+    "test": "node --check JavaScript.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
